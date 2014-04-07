@@ -3,10 +3,14 @@
 *.ko
 *.obj
 *.elf
+*.lo
+*.slo
 
 # Libraries
 *.lib
 *.a
+*.la
+*.lai
 
 # Shared objects
 *.so
