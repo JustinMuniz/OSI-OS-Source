@@ -54,7 +54,9 @@ __FBSDID("$FreeBSD$");
 #include <machine/cpu.h>
 #include <sys/sysctl.h>
 
-#include "pathnames.h"
+#include <paths.h>
+
+#define _PATH_CLOCK "/etc/wall_cmos_clock"
 
 /*#define DEBUG*/
 
