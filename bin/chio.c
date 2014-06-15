@@ -57,8 +57,32 @@ __FBSDID("$FreeBSD$");
 #include <langinfo.h>
 #include <locale.h>
 
-#include "defs.h"
-#include "pathnames.h"
+
+struct element_type {
+	const	char *et_name;	/* name; i.e. "picker, "slot", etc. */
+	int	et_type;	/* type number */
+};
+
+struct changer_command {
+	const	char *cc_name;	/* command name */
+				/* command handler */
+	int	(*cc_handler)(const char *, int, char **);
+};
+
+struct special_word {
+	const	char *sw_name;	/* special word */
+	int	sw_value;	/* token value */
+};
+
+/* sw_value */
+#define SW_INVERT	1	/* set "invert media" flag */
+#define SW_INVERT1	2	/* set "invert media 1" flag */
+#define SW_INVERT2	3	/* set "invert media 2" flag */
+
+/* Environment variable to check for default changer. */
+#define CHANGER_ENV_VAR		"CHANGER"
+
+#define _PATH_CH	"/dev/ch0"
 
 static	void usage(void);
 static	void cleanup(void);
