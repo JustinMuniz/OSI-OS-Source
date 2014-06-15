@@ -1,15 +1,4 @@
-#if 0
-#ifndef lint
-static char const copyright[] =
-"@(#) Copyright (c) 1983, 1992, 1993\n\
-	The Regents of the University of California.  All rights reserved.\n";
-#endif 
-#ifndef lint
-static char sccsid[] = "@(#)mkdir.c	8.2 (Berkeley) 1/25/94";
-#endif 
-#endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <err.h>
@@ -21,7 +10,6 @@ __FBSDID("$FreeBSD$");
 #include <sysexits.h>
 #include <unistd.h>
 static int build( char *, mode_t );
-static void usage( void );
 static int vflag;
 int main( int argc, char *argv[] ) {
 	int ch, exitval, success, pflag;
@@ -43,11 +31,11 @@ int main( int argc, char *argv[] ) {
 				break;
 			case '?':
 			default:
-				usage();
+				exit ( EX_USAGE );
 		}
 	argc -= optind;
 	argv += optind;
-	if ( argv[0] == NULL ) usage();
+	if ( argv[0] == NULL ) exit ( EX_USAGE );
 	if ( mode == NULL ) {
 		omode = S_IRWXU | S_IRWXG | S_IRWXO;
 	} else {
@@ -120,7 +108,4 @@ static int build( char *path, mode_t omode ) {
 	if ( !first && !last ) (void) umask( oumask );
 	return ( retval );
 }
-static void usage( void ) {
-	(void) fprintf( stderr, "usage: mkdir [-pv] [-m mode] directory_name ...\n" );
-	exit (EX_USAGE);
-}
+

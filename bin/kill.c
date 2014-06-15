@@ -1,15 +1,4 @@
-#if 0
-#ifndef lint
-static char const copyright[] =
-"@(#) Copyright (c) 1988, 1993, 1994\n\
-	The Regents of the University of California.  All rights reserved.\n";
-#endif 
-#ifndef lint
-static char sccsid[] = "@(#)kill.c	8.4 (Berkeley) 4/28/95";
-#endif 
-#endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
 #include <ctype.h>
 #include <err.h>
 #include <errno.h>
@@ -25,18 +14,18 @@ __FBSDID("$FreeBSD$");
 static void nosig( const char * );
 static void printsignals( FILE * );
 static int signame_to_signum( const char * );
-static void usage( void );
+static void usage_error( void );
 int main( int argc, char *argv[] ) {
 	int errors, numsig, pid;
 	char *ep;
-	if ( argc < 2 ) usage();
+	if ( argc < 2 ) usage_error();
 	numsig = SIGTERM;
 	argc--, argv++;
 	if ( !strcmp( *argv, "-l" ) ) {
 		argc--, argv++;
-		if ( argc > 1 ) usage();
+		if ( argc > 1 ) usage_error();
 		if ( argc == 1 ) {
-			if ( !isdigit( **argv ) ) usage();
+			if ( !isdigit( **argv ) ) usage_error();
 			numsig = strtol( *argv, &ep, 10 );
 			if ( !**argv || *ep ) errx( 2, "illegal signal number: %s", *argv );
 			if ( numsig >= 128 ) numsig -= 128;
@@ -51,7 +40,7 @@ int main( int argc, char *argv[] ) {
 		argc--, argv++;
 		if ( argc < 1 ) {
 			warnx( "option requires an argument -- s" );
-			usage();
+			usage_error();
 		}
 		if ( strcmp( *argv, "0" ) ) {
 			if ( ( numsig = signame_to_signum( *argv ) ) < 0 ) nosig( *argv );
@@ -69,7 +58,7 @@ int main( int argc, char *argv[] ) {
 		argc--, argv++;
 	}
 	if ( argc > 0 && strncmp( *argv, "--", 2 ) == 0 ) argc--, argv++;
-	if ( argc == 0 ) usage();
+	if ( argc == 0 ) usage_error();
 	for ( errors = 0; argc; argc--, argv++ ) {
 #ifdef SHELL
 		if (**argv == '%')
@@ -112,8 +101,7 @@ static void printsignals( FILE *fp ) {
 		else (void) fprintf( fp, " " );
 	}
 }
-static void usage( void ) {
-	(void) fprintf( stderr, "%s\n%s\n%s\n%s\n", "usage: kill [-s signal_name] pid ...", "       kill -l [exit_status]", "       kill -signal_name pid ...", "       kill -signal_number pid ..." );
+static void usage_error( void ) {
 #ifdef SHELL
 	error(NULL);
 #else

@@ -1,15 +1,4 @@
-#if 0
-#ifndef lint
-static const char copyright[] =
-"@(#) Copyright (c) 1980, 1990, 1993, 1994\n\
-	The Regents of the University of California.  All rights reserved.\n";
-#endif 
-#ifndef lint
-static char sccsid[] = "@(#)df.c	8.9 (Berkeley) 5/8/95";
-#endif 
-#endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
 #include <sys/param.h>
 #include <sys/stat.h>
 #include <sys/mount.h>
@@ -24,9 +13,8 @@ __FBSDID("$FreeBSD$");
 #include <string.h>
 #include <sysexits.h>
 #include <unistd.h>
-#include "extern.h"
-#define UNITS_SI	1
-#define UNITS_2		2
+#define UNITS_SI 1
+#define UNITS_2	2
 struct maxwidths {
 		int mntfrom;
 		int fstype;
@@ -46,7 +34,6 @@ static intmax_t fsbtoblk( int64_t, uint64_t, u_long );
 static void prtstat( struct statfs *, struct maxwidths * );
 static size_t regetmntinfo( struct statfs **, long, const char ** );
 static void update_maxwidths( struct maxwidths *, const struct statfs * );
-static void usage( void );
 static __inline int imax( int a, int b ) {
 	return ( a > b ? a : b );
 }
@@ -128,7 +115,7 @@ int main( int argc, char *argv[] ) {
 				break;
 			case '?':
 			default:
-				usage();
+				exit( EX_USAGE );
 		}
 	argc -= optind;
 	argv += optind;
@@ -208,8 +195,7 @@ int main( int argc, char *argv[] ) {
 	if ( cflag ) prtstat( &totalbuf, &maxwidths );
 	return ( rv );
 }
-static char *
-getmntpt( const char *name ) {
+static char * getmntpt( const char *name ) {
 	size_t mntsize, i;
 	struct statfs *mntbuf;
 	mntsize = getmntinfo( &mntbuf, MNT_NOWAIT );
@@ -359,13 +345,7 @@ static int int64width( int64_t val ) {
 	}
 	return ( len );
 }
-static void usage( void ) {
-	(void) fprintf( stderr, "usage: df [-b | -g | -H | -h | -k | -m | -P] [-acilnT] [-t type] [-,]\n"
-			"          [file | filesystem ...]\n" );
-	exit (EX_USAGE);
-}
-static char *
-makenetvfslist( void ) {
+static char * makenetvfslist( void ) {
 	char *str, *strptr, **listptr;
 	struct xvfsconf *xvfsp, *keep_xvfsp;
 	size_t buflen;

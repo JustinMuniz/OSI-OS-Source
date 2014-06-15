@@ -1,15 +1,4 @@
-#if 0
-#ifndef lint
-static char const copyright[] =
-"@(#) Copyright (c) 1987, 1993, 1994\n\
-	The Regents of the University of California.  All rights reserved.\n";
-#endif 
-#ifndef lint
-static char sccsid[] = "@(#)ln.c	8.2 (Berkeley) 3/31/94";
-#endif 
-#endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
 #include <sys/param.h>
 #include <sys/stat.h>
 #include <err.h>
@@ -31,7 +20,6 @@ static int vflag;
 static int wflag;
 static char linkch;
 static int linkit( const char *, const char *, int );
-static void usage( void );
 int main( int argc, char *argv[] ) {
 	struct stat sb;
 	char *p, *targetdir;
@@ -40,10 +28,10 @@ int main( int argc, char *argv[] ) {
 	else ++p;
 	if ( strcmp( p, "link" ) == 0 ) {
 		while ( getopt( argc, argv, "" ) != -1 )
-			usage();
+			exit( 1 );
 		argc -= optind;
 		argv += optind;
-		if ( argc != 2 ) usage();
+		if ( argc != 2 ) exit( 1 );
 		exit( linkit( argv[0], argv[1], 0 ) );
 	}
 	while ( ( ch = getopt( argc, argv, "FLPfhinsvw" ) ) != -1 )
@@ -81,7 +69,7 @@ int main( int argc, char *argv[] ) {
 				break;
 			case '?':
 			default:
-				usage();
+				exit( 1 );
 		}
 	argv += optind;
 	argc -= optind;
@@ -93,7 +81,7 @@ int main( int argc, char *argv[] ) {
 	}
 	switch ( argc ) {
 		case 0:
-			usage();
+			exit( 1 );
 		case 1:
 			exit( linkit( argv[0], ".", 1 ) );
 		case 2:
@@ -107,7 +95,7 @@ int main( int argc, char *argv[] ) {
 		err( 1, "%s", targetdir );
 	}
 	if ( stat( targetdir, &sb ) ) err( 1, "%s", targetdir );
-	if ( !S_ISDIR( sb.st_mode ) ) usage();
+	if ( !S_ISDIR( sb.st_mode ) ) exit( 1 );
 	for ( exitval = 0; *argv != targetdir; ++argv )
 		exitval |= linkit( *argv, targetdir, 1 );
 	exit( exitval );
@@ -220,8 +208,4 @@ static int linkit( const char *source, const char *target, int isdir ) {
 	}
 	if ( vflag ) (void) printf( "%s %c> %s\n", target, linkch, source );
 	return ( 0 );
-}
-static void usage( void ) {
-	(void) fprintf( stderr, "%s\n%s\n%s\n", "usage: ln [-s [-F] | -L | -P] [-f | -i] [-hnv] source_file [target_file]", "       ln [-s [-F] | -L | -P] [-f | -i] [-hnv] source_file ... target_dir", "       link source_file target_file" );
-	exit( 1 );
 }

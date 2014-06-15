@@ -1,5 +1,4 @@
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
 #include <sys/types.h>
 #include <sys/sysctl.h>
 #include <err.h>
@@ -8,7 +7,6 @@ __FBSDID("$FreeBSD$");
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-static void usage( void );
 static int kdumpenv( void );
 static int kgetenv( const char * );
 static int ksetenv( const char *, char * );
@@ -18,10 +16,6 @@ static int Nflag = 0;
 static int qflag = 0;
 static int uflag = 0;
 static int vflag = 0;
-static void usage( void ) {
-	(void) fprintf( stderr, "%s\n%s\n%s\n", "usage: kenv [-hNq]", "       kenv [-qv] variable[=value]", "       kenv [-q] -u variable" );
-	exit( 1 );
-}
 int main( int argc, char **argv ) {
 	char *env, *eq, *val;
 	int ch, error;
@@ -46,7 +40,7 @@ int main( int argc, char **argv ) {
 				vflag++;
 				break;
 			default:
-				usage();
+				exit( 1 );
 		}
 	}
 	argc -= optind;
@@ -61,8 +55,8 @@ int main( int argc, char **argv ) {
 		argv++;
 		argc--;
 	}
-	if ( ( hflag || Nflag ) && env != NULL ) usage();
-	if ( argc > 0 || ( ( uflag || vflag ) && env == NULL ) ) usage();
+	if ( ( hflag || Nflag ) && env != NULL ) exit( 1 );
+	if ( argc > 0 || ( ( uflag || vflag ) && env == NULL ) ) exit( 1 );
 	if ( env == NULL ) {
 		error = kdumpenv();
 		if ( error && !qflag ) warn( "kdumpenv" );

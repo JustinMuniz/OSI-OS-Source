@@ -1,5 +1,4 @@
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
 #include <sys/types.h>
 #include <sys/event.h>
 #include <sys/time.h>
@@ -13,10 +12,6 @@ __FBSDID("$FreeBSD$");
 #include <string.h>
 #include <sysexits.h>
 #include <unistd.h>
-static void usage( void ) {
-	fprintf( stderr, "usage: pwait [-v] pid ...\n" );
-	exit (EX_USAGE);
-}
 int main( int argc, char *argv[] ) {
 	int kq;
 	struct kevent *e;
@@ -30,12 +25,12 @@ int main( int argc, char *argv[] ) {
 				verbose = 1;
 				break;
 			default:
-				usage();
+				exit ( EX_USAGE );
 		}
 	}
 	argc -= optind;
 	argv += optind;
-	if ( argc == 0 ) usage();
+	if ( argc == 0 ) exit ( EX_USAGE );
 	kq = kqueue();
 	if ( kq == -1 ) err( 1, "kqueue" );
 	e = malloc( argc * sizeof(struct kevent) );

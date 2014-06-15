@@ -1,5 +1,4 @@
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
 #include <sys/types.h>
 #include <sys/param.h>
 #include <sys/sysctl.h>
@@ -69,7 +68,6 @@ static struct listhead tdevlist = SLIST_HEAD_INITIALIZER( tdevlist );
 static struct listhead sidlist = SLIST_HEAD_INITIALIZER( sidlist );
 static struct listhead jidlist = SLIST_HEAD_INITIALIZER( jidlist );
 static struct listhead classlist = SLIST_HEAD_INITIALIZER( classlist );
-static void usage( void ) __attribute__((__noreturn__));
 static int killact( const struct kinfo_proc * );
 static int grepact( const struct kinfo_proc * );
 static void makelist( struct listhead *, enum listtype, char * );
@@ -135,7 +133,7 @@ int main( int argc, char **argv ) {
 				criteria = 1;
 				break;
 			case 'I':
-				if ( pgrep ) usage();
+				if ( pgrep ) exit( STATUS_BADUSAGE );
 				interactive = 1;
 				break;
 			case 'L':
@@ -152,7 +150,7 @@ int main( int argc, char **argv ) {
 				criteria = 1;
 				break;
 			case 'S':
-				if ( !pgrep ) usage();
+				if ( !pgrep ) exit( STATUS_BADUSAGE );
 				kthreads = 1;
 				break;
 			case 'U':
@@ -167,7 +165,7 @@ int main( int argc, char **argv ) {
 				criteria = 1;
 				break;
 			case 'd':
-				if ( !pgrep ) usage();
+				if ( !pgrep ) exit( STATUS_BADUSAGE );
 				delim = optarg;
 				break;
 			case 'f':
@@ -196,7 +194,7 @@ int main( int argc, char **argv ) {
 				criteria = 1;
 				break;
 			case 'q':
-				if ( !pgrep ) usage();
+				if ( !pgrep ) exit( STATUS_BADUSAGE );
 				quiet = 1;
 				break;
 			case 's':
@@ -218,12 +216,12 @@ int main( int argc, char **argv ) {
 				fullmatch = 1;
 				break;
 			default:
-				usage();
+				exit( STATUS_BADUSAGE );
 		}
 	argc -= optind;
 	argv += optind;
 	if ( argc != 0 ) criteria = 1;
-	if ( !criteria ) usage();
+	if ( !criteria ) exit( STATUS_BADUSAGE );
 	if ( newest && oldest ) errx( STATUS_ERROR, "Options -n and -o are mutually exclusive" );
 	if ( pidfile != NULL ) pidfromfile = takepid( pidfile, pidfilelock );
 	else {
@@ -400,15 +398,6 @@ int main( int argc, char **argv ) {
 	if ( !did_action && !pgrep && longfmt ) fprintf( stderr, "No matching processes belonging to you were found\n" );
 	exit( rv ? STATUS_MATCH : STATUS_NOMATCH );
 }
-static void usage( void ) {
-	const char *ustr;
-	if ( pgrep ) ustr = "[-LSfilnoqvx] [-d delim]";
-	else ustr = "[-signal] [-ILfilnovx]";
-	fprintf( stderr, "usage: %s %s [-F pidfile] [-G gid] [-M core] [-N system]\n"
-			"             [-P ppid] [-U uid] [-c class] [-g pgrp] [-j jid]\n"
-			"             [-s sid] [-t tty] [-u euid] pattern ...\n", getprogname(), ustr );
-	exit( STATUS_BADUSAGE );
-}
 static void show_process( const struct kinfo_proc *kp ) {
 	char **argv;
 	if ( quiet ) {
@@ -457,7 +446,7 @@ static void makelist( struct listhead *head, enum listtype type, char *src ) {
 	int empty;
 	empty = 1;
 	while ( ( sp = strsep( &src, "," ) ) != NULL ) {
-		if ( *sp == '\0' ) usage();
+		if ( *sp == '\0' ) exit( STATUS_BADUSAGE );
 		if ( ( li = malloc( sizeof( *li ) ) ) == NULL ) {
 			err( STATUS_ERROR, "Cannot allocate %zu bytes", sizeof( *li ) );
 		}
@@ -530,10 +519,10 @@ static void makelist( struct listhead *head, enum listtype type, char *src ) {
 				if ( li->li_name == NULL ) err( STATUS_ERROR, "Cannot allocate memory" );
 				break;
 			default:
-				usage();
+				exit( STATUS_BADUSAGE );
 		}
 	}
-	if ( empty ) usage();
+	if ( empty ) exit( STATUS_BADUSAGE );
 }
 static int takepid( const char *pidfile, int pidfilelock ) {
 	char *endp, line[BUFSIZ];

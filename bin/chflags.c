@@ -1,15 +1,4 @@
-#if 0
-#ifndef lint
-static const char copyright[] =
-"@(#) Copyright (c) 1992, 1993, 1994\n\
-	The Regents of the University of California.  All rights reserved.\n";
-#endif
-#ifndef lint
-static char sccsid[] = "@(#)chflags.c	8.5 (Berkeley) 4/1/94";
-#endif
-#endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <err.h>
@@ -19,7 +8,6 @@ __FBSDID("$FreeBSD$");
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-static void usage( void );
 int main( int argc, char *argv[] ) {
 	FTS *ftsp;
 	FTSENT *p;
@@ -57,11 +45,11 @@ int main( int argc, char *argv[] ) {
 				break;
 			case '?':
 			default:
-				usage();
+				exit( 1 );
 		}
 	argv += optind;
 	argc -= optind;
-	if ( argc < 2 ) usage();
+	if ( argc < 2 ) exit( 1 );
 	if ( Rflag ) {
 		fts_options = FTS_PHYSICAL;
 		if ( hflag ) errx( 1, "the -R and -h options "
@@ -122,8 +110,4 @@ int main( int argc, char *argv[] ) {
 	}
 	if ( errno ) err( 1, "fts_read" );
 	exit( rval );
-}
-static void usage( void ) {
-	(void) fprintf( stderr, "usage: chflags [-fhv] [-R [-H | -L | -P]] flags file ...\n" );
-	exit( 1 );
 }

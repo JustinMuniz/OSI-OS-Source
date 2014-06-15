@@ -1,17 +1,4 @@
-#if 0
-#ifndef lint
-static char const copyright[] =
-"@(#) Copyright (c) 1989, 1993\n\
-	The Regents of the University of California.  All rights reserved.\n";
-#endif 
-#endif
-#ifndef lint
-#if 0
-static char sccsid[] = "@(#)cat.c	8.2 (Berkeley) 4/27/95";
-#endif
-#endif 
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
 #include <sys/param.h>
 #include <sys/stat.h>
 #ifndef NO_UDOM_SUPPORT
@@ -31,7 +18,6 @@ __FBSDID("$FreeBSD$");
 static int bflag, eflag, lflag, nflag, sflag, tflag, vflag;
 static int rval;
 static const char *filename;
-static void usage( void )
 __dead2;
 static void scanfiles( char *argv[], int cooked );
 static void cook_cat( FILE * );
@@ -73,7 +59,7 @@ int main( int argc, char *argv[] ) {
 				vflag = 1;
 				break;
 			default:
-				usage();
+				exit( 1 );
 		}
 	argv += optind;
 	if ( lflag ) {
@@ -87,10 +73,6 @@ int main( int argc, char *argv[] ) {
 	else scanfiles( argv, 0 );
 	if ( fclose (stdout) ) err( 1, "stdout" );
 	exit( rval );
-}
-static void usage( void ) {
-	fprintf( stderr, "usage: cat [-belnstuv] [file ...]\n" );
-	exit( 1 );
 }
 static void scanfiles( char *argv[], int cooked ) {
 	int fd, i;

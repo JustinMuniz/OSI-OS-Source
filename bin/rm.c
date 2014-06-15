@@ -1,15 +1,4 @@
-#if 0
-#ifndef lint
-static const char copyright[] =
-"@(#) Copyright (c) 1990, 1993, 1994\n\
-	The Regents of the University of California.  All rights reserved.\n";
-#endif 
-#ifndef lint
-static char sccsid[] = "@(#)rm.c	8.5 (Berkeley) 4/18/94";
-#endif 
-#endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
 #include <sys/stat.h>
 #include <sys/param.h>
 #include <sys/mount.h>
@@ -37,7 +26,6 @@ static void rm_file( char ** );
 static int rm_overwrite( const char *, struct stat * );
 static void rm_tree( char ** );
 static void siginfo( int __unused );
-static void usage( void );
 int main( int argc, char *argv[] ) {
 	int ch;
 	char *p;
@@ -45,10 +33,10 @@ int main( int argc, char *argv[] ) {
 	else ++p;
 	if ( strcmp( p, "unlink" ) == 0 ) {
 		while ( getopt( argc, argv, "" ) != -1 )
-			usage();
+			exit ( EX_USAGE );
 		argc -= optind;
 		argv += optind;
-		if ( argc != 1 ) usage();
+		if ( argc != 1 ) exit ( EX_USAGE );
 		rm_file( &argv[0] );
 		exit( eval );
 	}
@@ -86,13 +74,13 @@ int main( int argc, char *argv[] ) {
 				xflag = 1;
 				break;
 			default:
-				usage();
+				exit ( EX_USAGE );
 		}
 	argc -= optind;
 	argv += optind;
 	if ( argc < 1 ) {
 		if ( fflag ) return ( 0 );
-		usage();
+		exit ( EX_USAGE );
 	}
 	checkdot( argv );
 	if ( getenv( "POSIXLY_CORRECT" ) == NULL ) checkslash( argv );
@@ -389,12 +377,6 @@ static void checkdot( char **argv ) {
 		} else ++t;
 	}
 }
-static void usage( void ) {
-	(void) fprintf( stderr, "%s\n%s\n", "usage: rm [-f | -i] [-dIPRrvWx] file ...", "       unlink file" );
-	exit (EX_USAGE);
-}
-static void
-siginfo(int sig __unused)
-{	
+static void siginfo(int sig __unused) {	
 	info = 1;
 }

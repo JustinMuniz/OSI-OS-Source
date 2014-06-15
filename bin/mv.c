@@ -1,15 +1,4 @@
-#if 0
-#ifndef lint
-static char const copyright[] =
-"@(#) Copyright (c) 1989, 1993, 1994\n\
-	The Regents of the University of California.  All rights reserved.\n";
-#endif 
-#ifndef lint
-static char sccsid[] = "@(#)mv.c	8.2 (Berkeley) 4/2/94";
-#endif 
-#endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
 #include <sys/types.h>
 #include <sys/acl.h>
 #include <sys/param.h>
@@ -34,7 +23,6 @@ static int fflg, hflg, iflg, nflg, vflg;
 static int copy( const char *, const char * );
 static int do_move( const char *, const char * );
 static int fastcopy( const char *, const char *, struct stat * );
-static void usage( void );
 static void preserve_fd_acls( int source_fd, int dest_fd, const char *source_path, const char *dest_path );
 int main( int argc, char *argv[] ) {
 	size_t baselen, len;
@@ -64,17 +52,17 @@ int main( int argc, char *argv[] ) {
 				vflg = 1;
 				break;
 			default:
-				usage();
+				exit ( EX_USAGE );
 		}
 	argc -= optind;
 	argv += optind;
-	if ( argc < 2 ) usage();
+	if ( argc < 2 ) exit ( EX_USAGE );
 	if ( stat( argv[argc - 1], &sb ) || !S_ISDIR( sb.st_mode ) ) {
-		if ( argc > 2 ) usage();
+		if ( argc > 2 ) exit ( EX_USAGE );
 		exit( do_move( argv[0], argv[1] ) );
 	}
 	if ( hflg ) {
-		if ( argc > 2 ) usage();
+		if ( argc > 2 ) exit ( EX_USAGE );
 		if ( lstat( argv[1], &sb ) == 0 && S_ISLNK( sb.st_mode ) ) exit( do_move( argv[0], argv[1] ) );
 	}
 	if ( strlen( argv[argc - 1] ) > sizeof( path ) - 1 ) errx( 1, "%s: destination pathname too long", *argv );
@@ -332,8 +320,4 @@ static void preserve_fd_acls( int source_fd, int dest_fd, const char *source_pat
 		return;
 	}
 	acl_free( acl );
-}
-static void usage( void ) {
-	(void) fprintf( stderr, "%s\n%s\n", "usage: mv [-f | -i | -n] [-hv] source target", "       mv [-f | -i | -n] [-v] source ... directory" );
-	exit (EX_USAGE);
 }

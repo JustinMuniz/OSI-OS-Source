@@ -1,14 +1,9 @@
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
 #include <err.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <uuid.h>
-static void usage( void ) {
-	(void) fprintf( stderr, "usage: uuidgen [-1] [-n count] [-o filename]\n" );
-	exit( 1 );
-}
 int main( int argc, char *argv[] ) {
 	FILE *fp;
 	uuid_t *store, *uuid;
@@ -23,9 +18,9 @@ int main( int argc, char *argv[] ) {
 				iterate = 1;
 				break;
 			case 'n':
-				if ( count > 0 ) usage();
+				if ( count > 0 ) exit( 1 );
 				count = strtol( optarg, &p, 10 );
-				if ( *p != 0 || count < 1 ) usage();
+				if ( *p != 0 || count < 1 ) exit( 1 );
 				break;
 			case 'o':
 				if ( fp != stdout ) errx( 1, "multiple output files not allowed" );
@@ -33,11 +28,11 @@ int main( int argc, char *argv[] ) {
 				if ( fp == NULL ) err( 1, "fopen" );
 				break;
 			default:
-				usage();
+				exit( 1 );
 		}
 	argv += optind;
 	argc -= optind;
-	if ( argc ) usage();
+	if ( argc ) exit( 1 );
 	if ( count == -1 ) count = 1;
 	store = (uuid_t*) malloc( sizeof(uuid_t) * count );
 	if ( store == NULL ) err( 1, "malloc()" );

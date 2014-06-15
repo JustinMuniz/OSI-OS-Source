@@ -1,5 +1,4 @@
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
 #include <sys/types.h>
 #include <sys/param.h>
 #include <sys/acl.h>
@@ -13,11 +12,7 @@ __FBSDID("$FreeBSD$");
 #include <string.h>
 #include <unistd.h>
 static int more_than_one = 0;
-static void usage( void ) {
-	fprintf( stderr, "getfacl [-dhnqv] [file ...]\n" );
-}
-static char *
-getuname( uid_t uid ) {
+static char * getuname( uid_t uid ) {
 	struct passwd *pw;
 	static char uids[10];
 	if ( ( pw = getpwuid( uid ) ) == NULL ) {
@@ -25,8 +20,7 @@ getuname( uid_t uid ) {
 		return ( uids );
 	} else return ( pw->pw_name );
 }
-static char *
-getgname( gid_t gid ) {
+static char * getgname( gid_t gid ) {
 	struct group *gr;
 	static char gids[10];
 	if ( ( gr = getgrgid( gid ) ) == NULL ) {
@@ -162,7 +156,6 @@ int main( int argc, char *argv[] ) {
 				vflag = 1;
 				break;
 			default:
-				usage();
 				return ( -1 );
 		}
 	argc -= optind;

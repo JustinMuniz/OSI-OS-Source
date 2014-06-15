@@ -1,15 +1,4 @@
-#if 0
-#ifndef lint
-static char const copyright[] =
-"@(#) Copyright (c) 1989, 1993, 1994\n\
-	The Regents of the University of California.  All rights reserved.\n";
-#endif 
-#ifndef lint
-static char sccsid[] = "@(#)chmod.c	8.8 (Berkeley) 4/1/94";
-#endif 
-#endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
 #include <sys/param.h>
 #include <sys/stat.h>
 #include <err.h>
@@ -20,7 +9,6 @@ __FBSDID("$FreeBSD$");
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-static void usage( void );
 static int may_have_nfs4acl( const FTSENT *ent, int hflag );
 int main( int argc, char *argv[] ) {
 	FTS *ftsp;
@@ -70,11 +58,11 @@ int main( int argc, char *argv[] ) {
 				break;
 			case '?':
 			default:
-				usage();
+				exit( 1 );
 		}
 	done: argv += optind;
 	argc -= optind;
-	if ( argc < 2 ) usage();
+	if ( argc < 2 ) exit( 1 );
 	if ( Rflag ) {
 		fts_options = FTS_PHYSICAL;
 		if ( hflag ) errx( 1, "the -R and -h options may not be specified together." );
@@ -131,10 +119,6 @@ int main( int argc, char *argv[] ) {
 	}
 	if ( errno ) err( 1, "fts_read" );
 	exit( rval );
-}
-static void usage( void ) {
-	(void) fprintf( stderr, "usage: chmod [-fhv] [-R [-H | -L | -P]] mode file ...\n" );
-	exit( 1 );
 }
 static int may_have_nfs4acl( const FTSENT *ent, int hflag ) {
 	int ret;
