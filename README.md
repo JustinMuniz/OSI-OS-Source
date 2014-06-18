@@ -19,6 +19,7 @@ Contributed Code Style Guide
 ----------------------------
 
 Repository File Style
+
 Subject | Rule
 ------- | ----
 Build method | External libraries and custom configuration programs
@@ -40,5 +41,6 @@ Function prototypes | As few as necessary
 Tab length | 
 
 Specific Code Style Rules
-Subject							|	Rule
-------- 						|	----
+
+Subject | Rule
+------- | ----
