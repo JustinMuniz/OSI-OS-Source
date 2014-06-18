@@ -24,8 +24,8 @@ Subject | Rule
 ------- | ----
 Build method | external libraries and custom configuration programs
 Files per program | only when required by external software
-File names | .
-Directory hierarchy | .
+File names | 
+Directory hierarchy | 
 
 General Code Style Rules
 Subject							|	Rule
