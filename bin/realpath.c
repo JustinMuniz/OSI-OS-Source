@@ -12,13 +12,8 @@ int main( int argc, char *argv[] ) {
 	int ch, qflag, rval;
 	qflag = 0;
 	while ( ( ch = getopt( argc, argv, "q" ) ) != -1 ) {
-		switch ( ch ) {
-			case 'q':
-				qflag = 1;
-				break;
-			case '?':
-			default:
-				exit( 1 );
+		if ( ch == 'q' ) qflag = 1;
+		else exit( 1 );
 		}
 	}
 	argc -= optind;
@@ -33,4 +28,3 @@ int main( int argc, char *argv[] ) {
 	} while ( ( path = *argv++ ) != NULL );
 	exit( rval );
 }
-
