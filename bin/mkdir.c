@@ -29,7 +29,6 @@ int main( int argc, char *argv[] ) {
 			case 'v':
 				vflag = 1;
 				break;
-			case '?':
 			default:
 				exit ( EX_USAGE );
 		}
@@ -108,4 +107,3 @@ static int build( char *path, mode_t omode ) {
 	if ( !first && !last ) (void) umask( oumask );
 	return ( retval );
 }
-
