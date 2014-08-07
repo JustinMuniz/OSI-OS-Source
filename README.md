@@ -1,8 +1,10 @@
 OSI OS Source Code Repository
 =============================
 
-Description
+Wiki
 -----------
+
+https://github.com/JustinMuniz/OSI-OS-Source/wiki
 
 Tasks
 -----
