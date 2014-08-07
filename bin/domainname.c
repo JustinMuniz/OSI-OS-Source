@@ -9,15 +9,13 @@ int main( int argc, char *argv[] ) {
 	int ch;
 	char domainname[MAXHOSTNAMELEN];
 	while ( ( ch = getopt( argc, argv, "" ) ) != -1 )
-			exit( 1 );
+		exit( 1 );
 	argc -= optind;
 	argv += optind;
 	if ( argc > 1 ) exit( 1 );
-	if ( *argv ) {
+	if ( *argv )
 		if ( setdomainname( *argv, (int) strlen( *argv ) ) ) err( 1, "setdomainname" );
-	} else {
-		if ( getdomainname( domainname, (int) sizeof( domainname ) ) ) err( 1, "getdomainname" );
+	else if ( getdomainname( domainname, (int) sizeof( domainname ) ) ) err( 1, "getdomainname" );
 		(void) printf( "%s\n", domainname );
-	}
 	exit( 0 );
 }
