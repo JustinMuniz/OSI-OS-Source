@@ -40,9 +40,8 @@ int main( int argc, char *argv[] ) {
 		if ( uuidgen( store, count ) != 0 ) err( 1, "uuidgen()" );
 	} else {
 		uuid = store;
-		for ( i = 0; i < count; i++ ) {
+		for ( i = 0; i < count; i++ )
 			if ( uuidgen( uuid++, 1 ) != 0 ) err( 1, "uuidgen()" );
-		}
 	}
 	uuid = store;
 	while ( count-- ) {
