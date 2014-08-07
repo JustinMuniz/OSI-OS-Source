@@ -21,7 +21,6 @@ int main( int argc, char *argv[] ) {
 			case 'P':
 				physical = 1;
 				break;
-			case '?':
 			default:
 				exit( 1 );
 		}
