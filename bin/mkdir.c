@@ -30,11 +30,11 @@ int main( int argc, char *argv[] ) {
 				vflag = 1;
 				break;
 			default:
-				exit ( EX_USAGE );
+				exit (EX_USAGE);
 		}
 	argc -= optind;
 	argv += optind;
-	if ( argv[0] == NULL ) exit ( EX_USAGE );
+	if ( argv[0] == NULL ) exit (EX_USAGE);
 	if ( mode == NULL ) {
 		omode = S_IRWXU | S_IRWXG | S_IRWXO;
 	} else {

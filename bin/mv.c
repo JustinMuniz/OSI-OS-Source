@@ -52,17 +52,17 @@ int main( int argc, char *argv[] ) {
 				vflg = 1;
 				break;
 			default:
-				exit ( EX_USAGE );
+				exit (EX_USAGE);
 		}
 	argc -= optind;
 	argv += optind;
-	if ( argc < 2 ) exit ( EX_USAGE );
+	if ( argc < 2 ) exit (EX_USAGE);
 	if ( stat( argv[argc - 1], &sb ) || !S_ISDIR( sb.st_mode ) ) {
-		if ( argc > 2 ) exit ( EX_USAGE );
+		if ( argc > 2 ) exit (EX_USAGE);
 		exit( do_move( argv[0], argv[1] ) );
 	}
 	if ( hflg ) {
-		if ( argc > 2 ) exit ( EX_USAGE );
+		if ( argc > 2 ) exit (EX_USAGE);
 		if ( lstat( argv[1], &sb ) == 0 && S_ISLNK( sb.st_mode ) ) exit( do_move( argv[0], argv[1] ) );
 	}
 	if ( strlen( argv[argc - 1] ) > sizeof( path ) - 1 ) errx( 1, "%s: destination pathname too long", *argv );

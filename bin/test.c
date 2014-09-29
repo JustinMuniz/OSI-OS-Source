@@ -17,7 +17,7 @@
 #else
 #include <locale.h>
 static void error( const char *, ... )
-__dead2  __printf0like(1, 2); static
+__dead2   __printf0like(1, 2); static
 void error( const char *msg, ... ) {
 	va_list ap;
 	va_start( ap, msg );

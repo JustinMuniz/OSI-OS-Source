@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include <time.h>
 static volatile sig_atomic_t report_requested;
-static void report_request(int signo __unused) {	
+static void report_request(int signo __unused) {
 	report_requested = 1;
 }
 int main( int argc, char *argv[] ) {

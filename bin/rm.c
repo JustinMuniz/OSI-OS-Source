@@ -33,10 +33,10 @@ int main( int argc, char *argv[] ) {
 	else ++p;
 	if ( strcmp( p, "unlink" ) == 0 ) {
 		while ( getopt( argc, argv, "" ) != -1 )
-			exit ( EX_USAGE );
+			exit (EX_USAGE);
 		argc -= optind;
 		argv += optind;
-		if ( argc != 1 ) exit ( EX_USAGE );
+		if ( argc != 1 ) exit (EX_USAGE);
 		rm_file( &argv[0] );
 		exit( eval );
 	}
@@ -74,13 +74,13 @@ int main( int argc, char *argv[] ) {
 				xflag = 1;
 				break;
 			default:
-				exit ( EX_USAGE );
+				exit (EX_USAGE);
 		}
 	argc -= optind;
 	argv += optind;
 	if ( argc < 1 ) {
 		if ( fflag ) return ( 0 );
-		exit ( EX_USAGE );
+		exit (EX_USAGE);
 	}
 	checkdot( argv );
 	if ( getenv( "POSIXLY_CORRECT" ) == NULL ) checkslash( argv );
@@ -377,6 +377,6 @@ static void checkdot( char **argv ) {
 		} else ++t;
 	}
 }
-static void siginfo(int sig __unused) {	
+static void siginfo(int sig __unused) {
 	info = 1;
 }

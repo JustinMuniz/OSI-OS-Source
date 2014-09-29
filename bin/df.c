@@ -115,7 +115,7 @@ int main( int argc, char *argv[] ) {
 				break;
 			case '?':
 			default:
-				exit( EX_USAGE );
+				exit (EX_USAGE);
 		}
 	argc -= optind;
 	argv += optind;

@@ -25,12 +25,12 @@ int main( int argc, char *argv[] ) {
 				verbose = 1;
 				break;
 			default:
-				exit ( EX_USAGE );
+				exit (EX_USAGE);
 		}
 	}
 	argc -= optind;
 	argv += optind;
-	if ( argc == 0 ) exit ( EX_USAGE );
+	if ( argc == 0 ) exit (EX_USAGE);
 	kq = kqueue();
 	if ( kq == -1 ) err( 1, "kqueue" );
 	e = malloc( argc * sizeof(struct kevent) );

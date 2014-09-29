@@ -14,17 +14,17 @@ int main( int argc, char *argv[] ) {
 	while ( ( ch = getopt( argc, argv, "q" ) ) != -1 ) {
 		if ( ch == 'q' ) qflag = 1;
 		else exit( 1 );
-		}
 	}
-	argc -= optind;
-	argv += optind;
-	path = *argv != NULL ? *argv++ : ".";
-	rval = 0;
-	do {
-		if ( ( p = realpath( path, buf ) ) == NULL ) {
-			if ( !qflag ) warn( "%s", path );
-			rval = 1;
-		} else (void) printf( "%s\n", p );
-	} while ( ( path = *argv++ ) != NULL );
-	exit( rval );
+}
+argc -= optind;
+argv += optind;
+path = *argv != NULL ? *argv++ : ".";
+rval = 0;
+do {
+	if ( ( p = realpath( path, buf ) ) == NULL ) {
+		if ( !qflag ) warn( "%s", path );
+		rval = 1;
+	} else (void) printf( "%s\n", p );
+}while ( ( path = *argv++ ) != NULL );
+exit (rval);
 }
