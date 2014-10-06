@@ -200,9 +200,6 @@ static int udom_open( const char *path, int flags ) {
 				break;
 			case O_WRONLY:
 				if ( shutdown( fd, SHUT_RD ) == -1 ) warn (NULL);
-				break;
-			default:
-				break;
 		}
 	}
 	return ( fd );
