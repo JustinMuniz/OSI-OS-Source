@@ -43,7 +43,6 @@ int main( int argc, char *argv[] ) {
 			case 'v':
 				vflag++;
 				break;
-			case '?':
 			default:
 				exit( 1 );
 		}
@@ -93,8 +92,6 @@ int main( int argc, char *argv[] ) {
 			case FTS_SL:
 			case FTS_SLNONE:
 				if ( !hflag ) continue;
-			default:
-				break;
 		}
 		if ( oct ) newflags = set;
 		else newflags = ( p->fts_statp->st_flags | set ) & clear;
