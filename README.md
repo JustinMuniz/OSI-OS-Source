@@ -9,14 +9,14 @@ https://github.com/JustinMuniz/OSI-OS-Source/wiki
 Source Code
 -----------
 
-GitHub Web Interface
+GitHub Web Interface URL
 
-https://github.com/JustinMuniz/OSI-OS-Source
+* https://github.com/JustinMuniz/OSI-OS-Source
 
-Git Repository URLs
+Git Repository Checkout URLs
 
-* HTTPS: https://github.com/JustinMuniz/OSI-OS-Source.git
+* HTTPS: `https://github.com/JustinMuniz/OSI-OS-Source.git`
 
-* SSH: git@github.com:JustinMuniz/OSI-OS-Source.git
+* SSH: `git@github.com:JustinMuniz/OSI-OS-Source.git`
 
-* SVN: https://github.com/JustinMuniz/OSI-OS-Source
+* SVN: `https://github.com/JustinMuniz/OSI-OS-Source`
