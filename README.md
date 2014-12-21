@@ -15,8 +15,8 @@ https://github.com/JustinMuniz/OSI-OS-Source
 
 Git Repository URLs
 
-HTTPS: https://github.com/JustinMuniz/OSI-OS-Source.git
+* HTTPS: https://github.com/JustinMuniz/OSI-OS-Source.git
 
-SSH: git@github.com:JustinMuniz/OSI-OS-Source.git
+* SSH: git@github.com:JustinMuniz/OSI-OS-Source.git
 
-SVN: https://github.com/JustinMuniz/OSI-OS-Source
+* SVN: https://github.com/JustinMuniz/OSI-OS-Source
