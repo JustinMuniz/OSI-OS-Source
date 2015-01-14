@@ -1,15 +1,4 @@
-#if 0
-#ifndef lint
-static char const copyright[] =
-"@(#) Copyright (c) 1988, 1993, 1994\n\
-	The Regents of the University of California.  All rights reserved.\n";
-#endif 
-#ifndef lint
-static char sccsid[] = "@(#)cp.c	8.2 (Berkeley) 4/1/94";
-#endif 
-#endif
 #include <sys/cdefs.h>
-__FBSDID("$FreeBSD$");
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <err.h>
