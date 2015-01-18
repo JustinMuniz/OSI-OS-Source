@@ -1,5 +1,0 @@
-# $FreeBSD$
-# 
-files	"../cavium/files.octeon1"
-machine	mips mips64
-cpu		CPU_CNMIPS
